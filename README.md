@@ -29,7 +29,7 @@ Sentinel fires on every action request (build, fix, add, change, refactor, deplo
 
 ## Included References
 
-The `references/` directory contains detailed methodologies that Sentinel loads as needed:
+The `skills/sentinel/references/` directory contains detailed methodologies that Sentinel loads as needed:
 
 - **state-flow-tracing.md** -- The core analytical technique for mapping complete data lifecycles and catching inconsistent write paths
 - **doc-templates.md** -- Starting templates for project documentation (CLAUDE.md, ARCHITECTURE.md, CONTRIBUTING.md, and more)
