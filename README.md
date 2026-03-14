@@ -4,9 +4,22 @@ Sentinel is a Claude Code skill that acts as a project guardian. It intercepts e
 
 ## Install
 
+### Via skills CLI
+
 ```bash
 npx skills add joelcloralt/sentinel
 ```
+
+### Manual
+
+Clone the repo and copy the skill into your Claude Code skills directory:
+
+```bash
+git clone https://github.com/joelcloralt/sentinel.git
+cp -r sentinel/skills/sentinel ~/.claude/skills/sentinel
+```
+
+This installs Sentinel globally so it activates in every project.
 
 ## What It Does
 
