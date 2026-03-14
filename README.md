@@ -1,0 +1,45 @@
+# Sentinel
+
+Sentinel is a Claude Code skill that acts as a project guardian. It intercepts every work request before Claude takes action, scans the project for full context, identifies risks and dependencies, and delivers calibrated guidance -- ensuring nothing ships without proper assessment.
+
+## Install
+
+```bash
+npx skills add joelcloralt/sentinel
+```
+
+## What It Does
+
+Sentinel fires on every action request (build, fix, add, change, refactor, deploy, etc.) and runs a structured workflow before any code is written:
+
+1. **Intercept** -- Catch the request before any action is taken
+2. **Discover** -- Scan the project to understand the full context (code, infrastructure, brand, design, testing, business model, compliance)
+3. **Assess** -- Determine what is affected, what is at risk, and what decisions need to be made
+4. **Guide** -- Deliver inline guidance for small tasks or a structured brief for larger ones
+5. **Hand Off** -- Let Claude execute with full context, course-correcting if needed
+6. **Learn** -- Capture conventions, gotchas, and decisions in a `.sentinel/` directory for future sessions
+
+## Key Features
+
+- **State flow tracing**: Maps every read and write path for application state before approving fixes, catching bugs that survive surface-level patches
+- **Scope awareness**: Thinks about second and third-order effects of every change
+- **Calibrated guidance**: Small tasks get inline advice; larger tasks get structured briefs with tickets, testing plans, and verification checklists
+- **Project memory**: Maintains a `.sentinel/` directory that accumulates conventions, gotchas, architecture decisions, and inventory over time
+- **Gap detection**: Flags missing documentation (CLAUDE.md, ARCHITECTURE.md, brand guidelines, etc.) and offers to generate it
+
+## Included References
+
+The `references/` directory contains detailed methodologies that Sentinel loads as needed:
+
+- **state-flow-tracing.md** -- The core analytical technique for mapping complete data lifecycles and catching inconsistent write paths
+- **doc-templates.md** -- Starting templates for project documentation (CLAUDE.md, ARCHITECTURE.md, CONTRIBUTING.md, and more)
+
+## How It Works in Practice
+
+When you ask Claude to fix a bug, add a feature, or make any change, Sentinel activates first. It reads the project's configuration files, documentation, design system, test setup, deployment config, and any previously captured knowledge. It then delivers guidance that accounts for the full blast radius of the change -- not just the file you mentioned, but every downstream consumer, every related test, every brand guideline, and every deployment consideration.
+
+For small changes, this takes seconds and appears as a brief note before Claude proceeds. For larger changes, Sentinel produces a structured brief with tickets, acceptance criteria, and an agent execution plan.
+
+## License
+
+MIT
