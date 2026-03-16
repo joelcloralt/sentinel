@@ -53,6 +53,43 @@ When you ask Claude to fix a bug, add a feature, or make any change, Sentinel ac
 
 For small changes, this takes seconds and appears as a brief note before Claude proceeds. For larger changes, Sentinel produces a structured brief with tickets, acceptance criteria, and an agent execution plan.
 
+## Troubleshooting
+
+### Sentinel doesn't appear in the `/` menu or available skills
+
+The `npx skills add` command installs to `.agents/skills/sentinel/` (universal format) and creates a symlink at `.claude/skills/sentinel`. If the symlink wasn't created, Claude Code won't see the skill.
+
+**Fix:** Verify the symlink exists in your project:
+
+```bash
+ls -la .claude/skills/sentinel
+```
+
+If it's missing, create it manually:
+
+```bash
+mkdir -p .claude/skills
+ln -s ../../.agents/skills/sentinel .claude/skills/sentinel
+```
+
+Or install directly to the Claude Code skills directory:
+
+```bash
+# Project-level (this project only)
+cp -r .agents/skills/sentinel .claude/skills/sentinel
+
+# Global (all projects)
+cp -r .agents/skills/sentinel ~/.claude/skills/sentinel
+```
+
+### Sentinel activates but doesn't remember anything between sessions
+
+Sentinel stores project knowledge in a `.sentinel/` directory. As of v1.1, this directory is auto-created on first run. If you're on an older version, update the skill:
+
+```bash
+npx skills add joelcloralt/sentinel
+```
+
 ## License
 
 MIT
