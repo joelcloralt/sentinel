@@ -56,6 +56,25 @@ If the request is clear, move to discovery.
 
 Build your mental model of the project. If this is the first task in a session, do a full scan. If you've already scanned, refresh only what's relevant to the current request.
 
+### 2.0 Initialize `.sentinel/` (MANDATORY — first action on every run)
+
+Before scanning anything else, check if `.sentinel/` exists. **If it does not exist, create it immediately.** Do not ask. Do not skip. Do not defer to later. This is a prerequisite for Sentinel to function correctly.
+
+Create the directory with these empty starter files:
+
+```
+.sentinel/
+├── conventions.md    — "# Conventions\n\nCoding patterns, naming rules, and process norms.\n"
+├── gotchas.md        — "# Gotchas\n\nBugs caught, edge cases found, traps to avoid.\n"
+├── decisions.md      — "# Decisions\n\nArchitecture and product decisions.\n"
+├── inventory.md      — "# Inventory\n\nProject files, tools, services, and integrations.\n"
+└── changelog.md      — "# Sentinel Changelog\n\nWhat Sentinel learned and when.\n"
+```
+
+If `.sentinel/` already exists, read ALL files in it before proceeding. This is accumulated project knowledge from prior sessions — it contains gotchas, conventions, and decisions that prevent you from repeating past mistakes. Treat it as required reading.
+
+**Why this matters:** Without `.sentinel/`, every Sentinel invocation starts from scratch. Critical knowledge like "this API is blocked by a WAF" or "local builds don't have cloud secrets" gets rediscovered painfully instead of being loaded from memory. A project can go months without anyone noticing Sentinel isn't learning.
+
 ### 2.1 Project Identity & Conventions
 
 Scan for and read (if they exist):
@@ -357,9 +376,7 @@ Sentinel gets smarter over time. Every invocation is an opportunity to capture k
 
 ### The `.sentinel/` Directory
 
-On first run, if `.sentinel/` doesn't exist, offer to create it:
-
-> "I'd like to set up a `.sentinel/` directory to track what I learn about this project over time — conventions, gotchas, architecture decisions, new tools. This makes me more effective on every future task. OK to create it?"
+**`.sentinel/` is auto-initialized in Step 2.0.** By the time you reach Step 6, the directory already exists. If for any reason it doesn't, create it now — do not ask, do not skip.
 
 Structure:
 
@@ -418,9 +435,19 @@ Rules: add to the relevant section (don't rewrite), keep it high-signal (detail 
 
 During discovery, check for `.sentinel/` early. If it exists, read all files before the rest of the scan. Previously cataloged gotchas become active checks against the current task.
 
-### The Post-Task Learning Check
+### The Post-Task Learning Check (MANDATORY)
 
-After every task, ask: (1) Did I discover an undocumented convention? (2) Did I catch a bug or gotcha? (3) Was a decision made that should be recorded? (4) Were new files, tools, or services added? If yes to any, update `.sentinel/` and offer to update `CLAUDE.md`.
+After every task, you MUST run this check. Do not skip it. Do not abbreviate it.
+
+1. **Did I discover an undocumented convention?** → Write it to `conventions.md`
+2. **Did I catch a bug or gotcha?** → Write it to `gotchas.md`
+3. **Was a decision made that should be recorded?** → Write it to `decisions.md`
+4. **Were new files, tools, services, or env vars added?** → Write it to `inventory.md`
+5. **Did anything change at all?** → Log a dated entry in `changelog.md`
+
+If `.sentinel/` files are still empty after your first task in a project, that is a bug. Populate them from what you learned during the task — there is always something to record (at minimum: the project's stack, key conventions, and deployment architecture).
+
+Update `CLAUDE.md` when you learn something significant that all AI agents (not just Sentinel) should know. Add to the relevant section — don't rewrite.
 
 ---
 
@@ -482,7 +509,7 @@ If the user modifies the request mid-stream ("actually, also add X" or "requirem
 Use this to verify you haven't missed anything:
 
 **Code & Architecture:**
-- [ ] `.sentinel/` directory (read first if it exists — accumulated project knowledge)
+- [ ] `.sentinel/` directory — **create if missing, read ALL files if it exists** (this is step zero, before everything else)
 - [ ] AI instruction files (CLAUDE.md, agents.md)
 - [ ] README and contributing guide
 - [ ] Directory structure (2-3 levels)
